@@ -2,6 +2,13 @@
 и возвращает сумму наибольших двух аргументов.'''
 
 def my_func(a, b ,c):
+    """Принимает три позиционных аргумента, и возвращает сумму наибольших двух аргументов
+
+    :param a: int
+    :param b: int
+    :param c: int
+    :return: int
+    """
     sumtwo = a + b + c - min([a, b, c])
     return sumtwo
 
