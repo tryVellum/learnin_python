@@ -2,6 +2,12 @@
 Числа запрашивать у пользователя, предусмотреть обработку ситуации деления на ноль."""
 
 def calculator(a, b):
+    """Выполняет деление a на b, с проверкой деление на 0
+
+    :param a: int
+    :param b: int
+    :return: int
+    """
     try:
         c = a / b
     except ZeroDivisionError:
