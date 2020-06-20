@@ -3,8 +3,18 @@
 Необходимо получить результат вычисления произведения всех элементов списка."""
 from functools import reduce
 
-def my_func (one, two):
+def my_func(one, two):
+    """ one * two
+
+    :param one: int
+    :param two: int
+    :return: int
+    """
     return one * two
 
 my_list = [el for el in range(100, 1001) if not el % 2]
-print(reduce(my_func, my_list))
+google = reduce(my_func, my_list)
+n = 51
+for i in range(round(len(str(google)) / n)):
+    print(str(google)[n * i:n * (i + 1)])
+
