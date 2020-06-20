@@ -4,6 +4,16 @@
 Реализовать вывод данных о пользователе одной строкой."""
 
 def sucurity_information(name, secName, yers, city, email, mobile_number):
+    """Выводит одну строку из вводных данных
+
+    :param name: str
+    :param secName: str
+    :param yers: int
+    :param city: str
+    :param email: str
+    :param mobile_number: int
+    :return: str
+    """
     print(f'{name} {secName} {yers} {city} {email} {mobile_number}')
 
 n = "Clint"
