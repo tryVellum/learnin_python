@@ -25,5 +25,5 @@ with open('file_5_7', 'r') as firm:
     firm_dict['average_profit'] = average_profit
 print(firm_dict)
 
-with open("firm.json", "w", encoding='UTF-8') as write_f:
-    json.dump(firm_dict, write_f)
+with open("firm.json", "w") as write_f:
+    json.dump(firm_dict, write_f, ensure_ascii=False, separators=(',', ': '), indent=4)
