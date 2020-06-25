@@ -5,6 +5,8 @@
 Далее реализовать список. Он должен содержать словарь с фирмами и их прибылями,
 а также словарь со средней прибылью. Если фирма получила убытки, также добавить ее в словарь (со значением убытков)."""
 
+import json
+
 average_profit = 0
 firm_dict = {}
 count = 0
@@ -22,3 +24,6 @@ with open('file_5_7', 'r') as firm:
     average_profit = round(average_profit / count, 3)
     firm_dict['average_profit'] = average_profit
 print(firm_dict)
+
+with open("firm.json", "w", encoding='UTF-8') as write_f:
+    json.dump(firm_dict, write_f)
