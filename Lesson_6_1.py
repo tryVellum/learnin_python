@@ -8,6 +8,7 @@
 нарушении выводить соответствующее сообщение и завершать скрипт."""
 
 import time
+import sys
 
 def time_count(t):
     print(f'Осталось времени: {t}')
@@ -17,18 +18,29 @@ def time_count(t):
     time_count(t)
 
 class TrafficLight:
-    _color = ''
+    def __init__(self, _color):
+        if _color == 'Красный':
+            self._color = _color
+        else:
+            print('Скрипт завершен')
+            sys.exit()
 
     def running(self):
         TrafficLight._color = 'Красный'
-        print(TrafficLight._color)
+        print(f'\033[91m{TrafficLight._color}\033[0m')
         time_count(7)
         TrafficLight._color = 'Желтый'
-        print(TrafficLight._color)
+        print(f'\033[93m{TrafficLight._color}\033[0m')
         time_count(2)
         TrafficLight._color = 'Зелёный'
-        print(TrafficLight._color)
+        print(f'\033[92m{TrafficLight._color}\033[0m')
         time_count(5)
 
-traffic = TrafficLight()
+traffic = TrafficLight('Красный')
+traffic.running()
+
+traffic_two = TrafficLight('H')
+traffic.running()
+
+traffic = TrafficLight('Красный')
 traffic.running()
