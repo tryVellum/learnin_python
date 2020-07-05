@@ -6,6 +6,7 @@ class ZeroError(Exception):
     def __init__(self, txt):
         self.txt = txt
 
+
 if __name__ == '__main__':
 
     inp_dividend, inp_divider = input("Введите делимое число: "), input("Введите делитель: ")
