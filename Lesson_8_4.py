@@ -1,9 +1,20 @@
 """4. Начните работу над проектом «Склад оргтехники». Создайте класс, описывающий склад.
 А также класс «Оргтехника», который будет базовым для классов-наследников.
-Эти классы — конкретные типы оргтехники (принтер, сканер, ксерокс). В базовом классе определить параметры, общие для приведенных типов.
+Эти классы — конкретные типы оргтехники (принтер, сканер, ксерокс).
+В базовом классе определить параметры, общие для приведенных типов.
 В классах-наследниках реализовать параметры, уникальные для каждого типа оргтехники."""
 
 from abc import ABC
+
+
+class NegativeNumber(Exception):
+    def __init__(self, txt):
+        self.txt = txt
+
+    @staticmethod
+    def chekNumber(number):
+        if number < 0:
+           raise NegativeNumber('Действие невозможно! Учет меньше нуля!')
 
 
 class Warehouse:
@@ -27,18 +38,30 @@ class Warehouse:
         :return: None
         """
         if area == 90:
-            self.warehouse_equi[cls.name] = self.warehouse_equi[cls.name] - cls.quantity
             try:
-                self.office_equi[cls.name] += cls.quantity
-            except KeyError:
-                self.office_equi[cls.name] = cls.quantity
+                result = self.warehouse_equi[cls.name] - cls.quantity
+                NegativeNumber.chekNumber(result)
+                try:
+                    self.office_equi[cls.name] += cls.quantity
+                except KeyError:
+                    self.office_equi[cls.name] = cls.quantity
+            except NegativeNumber as err:
+                print(err)
+            else:
+                self.warehouse_equi[cls.name] = result
         elif area == 10:
-            self.office_equi[cls.name] = self.office_equi[cls.name] - cls.quantity
             try:
-                self.warehouse_equi[cls.name] += cls.quantity
-            except KeyError:
-                print('Позиция ранее не поступала.')
-                self.appequi(cls)
+                result = self.office_equi[cls.name] - cls.quantity
+                NegativeNumber.chekNumber(result)
+                try:
+                    self.warehouse_equi[cls.name] += cls.quantity
+                except KeyError:
+                    print('Позиция ранее не поступала.')
+                    self.appequi(cls)
+            except NegativeNumber as err:
+                print(err)
+            else:
+                self.office_equi[cls.name] = result
         else:
             print('Неверный код перемещения')
 
@@ -50,56 +73,83 @@ class Warehouse:
         :return: None
         """
         if area == 90:
-            self.office_equi[cls.name] = self.office_equi[cls.name] - cls.quantity
             try:
-                self.defect[cls.name] += cls.quantity
-            except KeyError:
-                self.defect[cls.name] = cls.quantity
+                result = self.office_equi[cls.name] - cls.quantity
+                NegativeNumber.chekNumber(result)
+                try:
+                    self.defect[cls.name] += cls.quantity
+                except KeyError:
+                    self.defect[cls.name] = cls.quantity
+            except NegativeNumber as err:
+                print(err)
+            else:
+                self.office_equi[cls.name] = result
         elif area == 10:
-            self.warehouse_equi[cls.name] = self.warehouse_equi[cls.name] - cls.quantity
             try:
-                self.defect[cls.name] += cls.quantity
-            except KeyError:
-                self.defect[cls.name] = cls.quantity
+                result = self.warehouse_equi[cls.name] - cls.quantity
+                NegativeNumber.chekNumber(result)
+                try:
+                    self.defect[cls.name] += cls.quantity
+                except KeyError:
+                    self.defect[cls.name] = cls.quantity
+            except NegativeNumber as err:
+                print(err)
+            else:
+                self.warehouse_equi[cls.name] = result
         else:
             print('Неверный код перемещения')
 
+
 class OfficeEquipment(ABC):
-    def __init__(self, name: str, quantity: int):
-        self.quantity = quantity
-        self.name = name
+    name: str
+
+    def __init__(self, quantity: int):
+        try:
+            self.quantity = quantity
+            NegativeNumber.chekNumber(quantity)
+        except NegativeNumber as err:
+            print(err)
+            self.quantity = 0
+
     @property
     def action(self):
         pass
 
 
 class Calc(OfficeEquipment):
+    name = 'Калькулятор'
+
     @property
     def action(self):
         return print('Производит вычисление')
 
 
 class CashRegister(OfficeEquipment):
+    name = 'Кассовый аппарат'
+
     @property
     def action(self):
         return print('Операции с денежными средствами')
 
 
 class MultifunctionDevice(OfficeEquipment):
+    name = 'МФУ'
     @property
     def action(self):
         return print('Копирует, печатает, сканирует')
 
 
 if __name__ == '__main__':
-    one = Calc('Калькулятор', 233)
-    two = CashRegister('Кассовый аппарат', 3)
-    three = MultifunctionDevice('МФУ', 10)
+    one = Calc(10)
+    two = CashRegister(3)
+    three = MultifunctionDevice(10)
+    error_equip = Calc(-2)
     one.action
     two.action
     three.action
 
-    one_defect = Calc('Калькулятор', 5)
+    print(error_equip.quantity)
+    one_defect = Calc(15)
     warehouse = Warehouse()
     warehouse.appequi(one)
     warehouse.appequi(two)
